@@ -106,7 +106,7 @@ export function resetRouter() {
 }
 
 /** 路由白名单 */
-const whiteList = ["/login"];
+const whiteList = ["/login", "/h5/page1", "/h5/page2"];
 
 const { VITE_HIDE_HOME } = import.meta.env;
 

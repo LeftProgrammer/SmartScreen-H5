@@ -9,6 +9,33 @@ import {
   __APP_INFO__
 } from "./build/utils";
 
+// 代理服务器配置 - 方便修改代理地址
+const PROXY_CONFIG = {
+  // 目标服务器地址 - 更新为实际的塔吊数据服务器
+  target: "http://192.168.10.110:18084",
+  // 需要代理的路径列表
+  paths: ["/open", "/temp", "/norm", "/anon", "/secure", "/api", "/sdk"],
+  // 代理选项
+  options: {
+    changeOrigin: true,
+    secure: false
+  }
+};
+
+// 生成代理配置的辅助函数
+function createProxyConfig() {
+  const proxy: Record<string, any> = {};
+
+  PROXY_CONFIG.paths.forEach(path => {
+    proxy[path] = {
+      target: PROXY_CONFIG.target,
+      ...PROXY_CONFIG.options
+    };
+  });
+
+  return proxy;
+}
+
 export default ({ mode }: ConfigEnv): UserConfigExport => {
   const { VITE_CDN, VITE_PORT, VITE_COMPRESSION, VITE_PUBLIC_PATH } =
     wrapperEnv(loadEnv(mode, root));
@@ -24,7 +51,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       port: VITE_PORT,
       host: "0.0.0.0",
       // 本地跨域代理 https://cn.vitejs.dev/config/server-options.html#server-proxy
-      proxy: {},
+      proxy: createProxyConfig(),
       // 预热文件以提前转换和缓存结果，降低启动期间的初始页面加载时长并防止转换瀑布
       warmup: {
         clientFiles: ["./index.html", "./src/{views,components}/*"]
