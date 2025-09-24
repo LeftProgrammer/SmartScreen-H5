@@ -1,2 +1,1 @@
-# SmartScreen-H5
-多页H5项目
+<h1>SmartScreen-H5</h1>
