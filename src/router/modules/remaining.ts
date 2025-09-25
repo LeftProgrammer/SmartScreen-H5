@@ -13,6 +13,16 @@ export default [
   },
   // H5页面路由 - 独立页面
   {
+    path: "/h5/home",
+    name: "H5Home",
+    component: () => import("@/views/h5/home/index.vue"),
+    meta: {
+      title: "H5Home页面",
+      showLink: false,
+      rank: 201
+    }
+  },
+  {
     path: "/h5/page1",
     name: "H5Page1",
     component: () => import("@/views/h5/page1/index.vue"),

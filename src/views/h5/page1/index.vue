@@ -1,3 +1,4 @@
+<!-- 塔吊 -->
 <template>
   <div class="control-panel">
     <!-- 运行状态标题 -->
@@ -51,7 +52,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
 import { ElMessage } from "element-plus";
-import { getProcessedControlData } from "@/api/page1";
+import { getProcessedControlData } from "@/api/h5";
 
 defineOptions({
   name: "H5Page1"

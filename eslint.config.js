@@ -164,7 +164,7 @@ export default defineConfig([
             normal: "always",
             component: "always"
           },
-          svg: "always",
+          svg: "never",
           math: "always"
         }
       ]
