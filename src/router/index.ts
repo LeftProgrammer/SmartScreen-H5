@@ -108,12 +108,12 @@ export function resetRouter() {
 /** 路由白名单 */
 const whiteList = [
   "/login",
-  "/h5/home",
+  "/h5/ARHome",
   "/h5/clock",
   "/h5/health",
   "/h5/box",
-  "/h5/page1",
-  "/h5/crane"
+  "/h5/crane",
+  "/h5/page1"
 ];
 
 const { VITE_HIDE_HOME } = import.meta.env;
@@ -200,7 +200,7 @@ router.beforeEach((to: ToRouteType, _from, next) => {
     }
   } else {
     if (to.path !== "/login") {
-      if (whiteList.indexOf(to.path) !== -1) {
+      if (whiteList.indexOf(to.path) !== -1 || to.path.startsWith("/h5/")) {
         next();
       } else {
         removeToken();

@@ -13,9 +13,9 @@ export default [
   },
   // H5页面路由 - 独立页面
   {
-    path: "/h5/home",
-    name: "H5Home",
-    component: () => import("@/views/h5/home/index.vue"),
+    path: "/h5/ARHome",
+    name: "H5ARHome",
+    component: () => import("@/views/h5/ARHome/index.vue"),
     meta: {
       title: "ARWeb遮罩H5",
       showLink: false

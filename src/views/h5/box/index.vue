@@ -127,7 +127,7 @@ const statusText = computed(() => {
 const fetchData = async () => {
   try {
     const response = await getPowerDeviceData({
-      pageSize: 1,
+      pageSize: 5,
       current: 1
     });
     if (response.success && response.data && response.data.records.length > 0) {
