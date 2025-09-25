@@ -74,6 +74,54 @@ export type ProcessedEnvironmentData = {
   rawData: any;
 };
 
+// 人员考勤记录
+export interface AttendanceRecord {
+  id: string;
+  realName: string; // 人员姓名
+  teamName: string; // 班组
+  inTime: string; // 入场时间
+  outTime: string | null; // 出场时间
+  workTime: number; // 工作时长 (h)
+}
+
+// 人员考勤API分页响应
+export interface FaceAttendanceResult {
+  success: boolean;
+  code: number;
+  data: {
+    records: AttendanceRecord[];
+    total: number;
+    pages: number;
+    pageSize: number;
+    current: number;
+  };
+}
+
+// 健康监测记录
+export interface HealthRecord {
+  username: string; // 监测人员
+  orgName: string | null; // 班组
+  monitortime: number[] | string; // 监测时间 [年, 月, 日, 时, 分, 秒] 或字符串
+  heartbeat: number | null; // 心率值 (bpm)
+  shrink: number | null; // 收缩压 (mmhg)
+  diastolic: number | null; // 舒张压 (mmhg)
+  temperature: number | null; // 体温 (℃)
+  devicecode: string; // 设备编码
+  personid: string; // 人员ID
+}
+
+// 健康监测API响应
+export interface HealthDataResult {
+  success: boolean;
+  code: number;
+  data: {
+    type: string;
+    count: number;
+    list: HealthRecord[];
+    fields: any[];
+  };
+}
+
 /**
  * 格式化数字，去掉末尾的0，最多保留2位小数
  * @param value 数字字符串
@@ -188,4 +236,46 @@ export const getProcessedEnvironmentData = async (
     // 请求失败表示离线状态
     throw new Error("设备离线");
   }
+};
+
+/**
+ * 获取人员考勤分页数据
+ * @param data 请求体
+ */
+export const getFaceAttendancePage = (data: {
+  realName?: string;
+  devicePosition?: string;
+  pageSize?: number;
+  current?: number;
+}) => {
+  return http.request<FaceAttendanceResult>(
+    "post",
+    "/anon/kjxa/action/face-attendance/work/search-page",
+    { data },
+    {
+      disableProgress: true
+    }
+  );
+};
+
+/**
+ * 获取人员健康监测数据
+ * @param data 请求体
+ */
+export const getHealthMonitorData = (data: {
+  userName?: string;
+  orgId?: string;
+  deviceCode?: string;
+  unit?: string;
+  pageSize?: number;
+  current?: number;
+}) => {
+  return http.request<HealthDataResult>(
+    "post",
+    "/api/base/data/data-select/search-collect-page?code=smartBandLogGroup",
+    { data },
+    {
+      disableProgress: true
+    }
+  );
 };

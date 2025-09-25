@@ -17,7 +17,27 @@ export default [
     name: "H5Home",
     component: () => import("@/views/h5/home/index.vue"),
     meta: {
-      title: "H5Home页面",
+      title: "ARWeb遮罩H5",
+      showLink: false,
+      rank: 201
+    }
+  },
+  {
+    path: "/h5/clock",
+    name: "H5Clock",
+    component: () => import("@/views/h5/clock/index.vue"),
+    meta: {
+      title: "人员打卡",
+      showLink: false,
+      rank: 201 
+    }
+  },
+  {
+    path: "/h5/health",
+    name: "H5Health",
+    component: () => import("@/views/h5/health/index.vue"),
+    meta: {
+      title: "人员健康监测",
       showLink: false,
       rank: 201
     }
