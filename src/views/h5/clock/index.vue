@@ -38,7 +38,7 @@ let timer: NodeJS.Timeout | null = null;
 const mockData: AttendanceRecord[] = [
   {
     id: "1",
-    realName: "张三",
+    realName: "邓建兵",
     teamName: "钢筋组",
     inTime: "2025-09-12 09:21",
     outTime: "2025-09-12 21:18",
@@ -46,7 +46,7 @@ const mockData: AttendanceRecord[] = [
   },
   {
     id: "2",
-    realName: "李四",
+    realName: "韩光华",
     teamName: "钢筋组",
     inTime: "2025-09-12 09:21",
     outTime: null,
@@ -54,7 +54,7 @@ const mockData: AttendanceRecord[] = [
   },
   {
     id: "3",
-    realName: "王五",
+    realName: "张胜俊",
     teamName: "钢筋组",
     inTime: "2025-09-12 09:21",
     outTime: null,
@@ -62,7 +62,7 @@ const mockData: AttendanceRecord[] = [
   },
   {
     id: "4",
-    realName: "赵六",
+    realName: "	黄明前",
     teamName: "钢筋组",
     inTime: "2025-09-12 09:21",
     outTime: null,
@@ -70,7 +70,7 @@ const mockData: AttendanceRecord[] = [
   },
   {
     id: "5",
-    realName: "孙七",
+    realName: "张海鹏",
     teamName: "钢筋组",
     inTime: "2025-09-12 09:21",
     outTime: null,
@@ -78,7 +78,7 @@ const mockData: AttendanceRecord[] = [
   },
   {
     id: "6",
-    realName: "周八",
+    realName: "沈伟",
     teamName: "钢筋组",
     inTime: "2025-09-12 09:21",
     outTime: null,
@@ -86,7 +86,7 @@ const mockData: AttendanceRecord[] = [
   },
   {
     id: "7",
-    realName: "吴九",
+    realName: "刘洪",
     teamName: "钢筋组",
     inTime: "2025-09-12 09:21",
     outTime: null,
@@ -94,7 +94,7 @@ const mockData: AttendanceRecord[] = [
   },
   {
     id: "8",
-    realName: "郑十",
+    realName: "段彦希",
     teamName: "钢筋组",
     inTime: "2025-09-12 09:21",
     outTime: null,
@@ -102,19 +102,11 @@ const mockData: AttendanceRecord[] = [
   },
   {
     id: "9",
-    realName: "刘一",
+    realName: "杨文中",
     teamName: "钢筋组",
     inTime: "2025-09-12 09:21",
     outTime: null,
     workTime: 4
-  },
-  {
-    id: "10",
-    realName: "陈二",
-    teamName: "钢筋组",
-    inTime: "2025-09-12 09:21",
-    outTime: null,
-    workTime: 2
   }
 ];
 

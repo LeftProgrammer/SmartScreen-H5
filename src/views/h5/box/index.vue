@@ -304,12 +304,28 @@ onUnmounted(() => {
     gap: 10px 6px;
 
     .monitor-item {
-      display: flex;
-      align-items: center;
-      background: rgba(25, 126, 74, 0.3);
-      padding: 8px 12px;
+      height: 36px;
+      background: linear-gradient(
+        180deg,
+        rgba(53, 193, 121, 0.5) 0%,
+        rgba(14, 110, 61, 0.5) 100%
+      );
+      border: 1px solid rgba(0, 255, 136, 0.3);
       border-radius: 2px;
-      min-height: 32px;
+      padding: 0 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid;
+      border-image: linear-gradient(
+          180deg,
+          rgba(182, 255, 168, 0.14),
+          rgba(236, 255, 242, 0.35)
+        )
+        1 1;
+      color: #ffffff;
+      font-size: 14px;
+      transition: all 0.3s ease;
 
       .monitor-label {
         color: #ffffff;

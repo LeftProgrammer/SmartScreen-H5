@@ -18,8 +18,7 @@ export default [
     component: () => import("@/views/h5/home/index.vue"),
     meta: {
       title: "ARWeb遮罩H5",
-      showLink: false,
-      rank: 201
+      showLink: false
     }
   },
   {
@@ -28,8 +27,7 @@ export default [
     component: () => import("@/views/h5/clock/index.vue"),
     meta: {
       title: "人员打卡",
-      showLink: false,
-      rank: 201
+      showLink: false
     }
   },
   {
@@ -38,8 +36,7 @@ export default [
     component: () => import("@/views/h5/health/index.vue"),
     meta: {
       title: "人员健康监测",
-      showLink: false,
-      rank: 201
+      showLink: false
     }
   },
   {
@@ -48,28 +45,16 @@ export default [
     component: () => import("@/views/h5/box/index.vue"),
     meta: {
       title: "一号配电箱",
-      showLink: false,
-      rank: 201
+      showLink: false
     }
   },
   {
-    path: "/h5/page1",
-    name: "H5Page1",
-    component: () => import("@/views/h5/page1/index.vue"),
+    path: "/h5/crane",
+    name: "H5Crane",
+    component: () => import("@/views/h5/crane/index.vue"),
     meta: {
-      title: "H5页面1",
-      showLink: false,
-      rank: 201
-    }
-  },
-  {
-    path: "/h5/page2",
-    name: "H5Page2",
-    component: () => import("@/views/h5/page2/index.vue"),
-    meta: {
-      title: "H5页面2",
-      showLink: false,
-      rank: 202
+      title: "一号塔吊",
+      showLink: false
     }
   },
   {

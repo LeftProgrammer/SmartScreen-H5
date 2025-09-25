@@ -51,15 +51,15 @@
     <InfoCard
       title="桐子坝13#域-高空监测"
       :items="projectCardItems"
-      :top="150"
-      :left="400"
+      top="23%"
+      right="55%"
     />
 
     <InfoCard
       title="桐子坝14#域-高空监测"
       :items="projectCardItems"
-      :top="150"
-      :right="200"
+      top="13%"
+      right="29%"
     />
 
     <!-- CallBridge数据展示面板 -->
@@ -185,15 +185,54 @@ const AREA_DATA = [
   {
     id: 1,
     points: [
-      1141.021897810219, 464.5023696682465, 1395.6204379562043,
-      660.2843601895735, 1132.846715328467, 731.9431279620853
+      663.1428932812769, 871.7910844850038, 1156.571491599573,
+      857.0149644089868, 1340.4286444761356, 939.761236834682,
+      1166.0000635419608, 1063.8806454732248, 557.8571732579462,
+      1059.4478094504198
     ],
-    color: "#ffa500"
+    color: "#ff0000"
     // type: "polygon"
     // labelImage: markerImage,
     // labelText: "施工区域",
     // labelOffset: { x: 50, y: -80 },
     // clickable: true
+  },
+  {
+    id: 2,
+    name: "电子围栏2",
+    points: [
+      1347.0036397886563, 691.5017756968002, 1316.5054441707998,
+      802.1420598082882, 1408.0000310243688, 838.1001521445219,
+      1509.66068308389, 770.3329781262355, 1449.9350499989214,
+      641.7136478466306, 1441.0397429437132, 640.330644295237
+    ],
+    color: "#ff0000"
+  },
+  {
+    id: 3,
+    name: "高空监测1",
+    points: [
+      864.1155425059304, 260.00466766199685, 728.1444203763207,
+      695.6507863509811, 804.3899094209617, 720.5448502760659,
+      865.3863006566744, 738.5238964441827, 949.2563386057794,
+      748.2049213039378, 1031.8556184041404, 745.4389142011506,
+      1099.2058003935733, 728.8428715844274, 1160.2021916292858,
+      698.4167934537683, 1221.1985828649988, 661.075697566141,
+      1237.7184388246708, 632.0326229868754, 1129.7039960114296,
+      246.17463214806088, 1129.7039960114296, 246.17463214806088
+    ],
+    color: "#25E973"
+  },
+  {
+    id: 4,
+    name: "高空监测2",
+    points: [
+      1358.4404631453524, 212.98254691461446, 1350.815914240888,
+      298.7287671010177, 1428.3321614362733, 329.1548452316769,
+      1502.036134179426, 280.74972093290086, 1472.8086967123138,
+      215.74855401740166
+    ],
+    color: "#25E973"
   }
 ];
 
@@ -392,10 +431,10 @@ const addAreaToSVG = (area: any) => {
 
   polygon.setAttribute("id", `area-${area.id}`);
   polygon.setAttribute("points", pointsStr.join(" "));
-  polygon.setAttribute("fill", `${area.color}20`);
+  polygon.setAttribute("fill", `${area.color}15`);
   polygon.setAttribute("stroke", area.color);
-  polygon.setAttribute("stroke-width", "6");
-  polygon.setAttribute("stroke-dasharray", "30,20");
+  polygon.setAttribute("stroke-width", "2");
+  polygon.setAttribute("stroke-dasharray", "20,10");
   polygon.setAttribute("stroke-linejoin", "round");
   polygon.setAttribute("class", "fence-polygon");
   polygon.setAttribute("data-area-id", area.id.toString());
@@ -729,22 +768,6 @@ const getRandomColor = () => {
     "#800080"
   ];
   return colors[Math.floor(Math.random() * colors.length)];
-};
-
-// 控制面板切换
-const toggleDrawingToolbar = () => {
-  showDrawingToolbar.value = !showDrawingToolbar.value;
-};
-
-const toggleCallBridgePanel = () => {
-  showCallBridgePanel.value = !showCallBridgePanel.value;
-};
-
-const resetView = () => {
-  if (isDrawing.value) {
-    exitDrawingMode();
-  }
-  ElMessage.success("视图已重置");
 };
 
 // ----------------- 页面数据 ----------------
@@ -1148,9 +1171,9 @@ onUnmounted(() => {
   position: absolute;
   bottom: 15px;
   right: 15px;
-  background: rgba(9, 22, 69, 0.77);
+  background: rgba(9, 22, 69, 0.7);
   color: #ffffff;
-  padding: 14px 12px;
+  padding: 12px;
   border-radius: 2px;
   font-size: 12px;
   pointer-events: auto;
@@ -1162,11 +1185,11 @@ onUnmounted(() => {
     font-size: 14px;
     font-weight: bold;
     .status {
-      width: 6px;
-      height: 6px;
+      width: 8px;
+      height: 8px;
       background-color: #ffac26;
-      border: none;
-      margin-right: 4px;
+      border-radius: 2px;
+      margin-right: 8px;
     }
   }
 
@@ -1176,6 +1199,10 @@ onUnmounted(() => {
     align-items: center;
     margin-bottom: 6px;
     align-items: center;
+
+    &:last-child {
+      margin-bottom: 0px;
+    }
   }
 
   .info-item span:first-child {

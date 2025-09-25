@@ -38,7 +38,7 @@ let timer: NodeJS.Timeout | null = null;
 const mockData: HealthRecord[] = [
   {
     personid: "1",
-    username: "张三",
+    username: "邱之涵",
     orgName: "钢筋组",
     monitortime: "2025-09-12 09:21",
     heartbeat: 80,
@@ -48,7 +48,7 @@ const mockData: HealthRecord[] = [
   },
   {
     personid: "2",
-    username: "李四",
+    username: "黄波",
     orgName: "钢筋组",
     monitortime: "2025-09-12 09:21",
     heartbeat: 90,
@@ -58,7 +58,7 @@ const mockData: HealthRecord[] = [
   },
   {
     personid: "3",
-    username: "王五",
+    username: "刘祥林",
     orgName: "钢筋组",
     monitortime: "2025-09-12 09:21",
     heartbeat: 70,
@@ -68,7 +68,7 @@ const mockData: HealthRecord[] = [
   },
   {
     personid: "4",
-    username: "赵六",
+    username: "廖应彬",
     orgName: "钢筋组",
     monitortime: "2025-09-12 09:21",
     heartbeat: 85,
@@ -78,7 +78,7 @@ const mockData: HealthRecord[] = [
   },
   {
     personid: "5",
-    username: "孙七",
+    username: "冉豪",
     orgName: "钢筋组",
     monitortime: "2025-09-12 09:21",
     heartbeat: 95,
@@ -88,7 +88,7 @@ const mockData: HealthRecord[] = [
   },
   {
     personid: "6",
-    username: "周八",
+    username: "尔古极石",
     orgName: "钢筋组",
     monitortime: "2025-09-12 09:21",
     heartbeat: 75,
@@ -98,7 +98,7 @@ const mockData: HealthRecord[] = [
   },
   {
     personid: "7",
-    username: "吴九",
+    username: "冀永文",
     orgName: "钢筋组",
     monitortime: "2025-09-12 09:21",
     heartbeat: 80,
@@ -108,7 +108,7 @@ const mockData: HealthRecord[] = [
   },
   {
     personid: "8",
-    username: "郑十",
+    username: "贾正权",
     orgName: "钢筋组",
     monitortime: "2025-09-12 09:21",
     heartbeat: 90,
@@ -118,7 +118,7 @@ const mockData: HealthRecord[] = [
   },
   {
     personid: "9",
-    username: "刘一",
+    username: "曾维明",
     orgName: "钢筋组",
     monitortime: "2025-09-12 09:21",
     heartbeat: 70,
@@ -128,7 +128,7 @@ const mockData: HealthRecord[] = [
   },
   {
     personid: "10",
-    username: "陈二",
+    username: "陶正明",
     orgName: "钢筋组",
     monitortime: "2025-09-12 09:21",
     heartbeat: 85,

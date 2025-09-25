@@ -176,7 +176,8 @@ defineExpose({
 
   .status-text {
     color: #00ff88;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: bold;
     transition: all 0.3s ease;
 
     &.offline {
@@ -188,7 +189,7 @@ defineExpose({
 .controls-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px 8px;
+  gap: 12px 6px;
 }
 
 .control-item {

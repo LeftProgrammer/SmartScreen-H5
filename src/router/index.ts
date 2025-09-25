@@ -113,7 +113,7 @@ const whiteList = [
   "/h5/health",
   "/h5/box",
   "/h5/page1",
-  "/h5/page2"
+  "/h5/crane"
 ];
 
 const { VITE_HIDE_HOME } = import.meta.env;
