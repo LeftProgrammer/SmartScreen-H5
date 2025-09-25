@@ -15,7 +15,7 @@
       @contextmenu.prevent
     ></svg>
     <!-- 顶部状态栏 -->
-    <div class="top-bar">
+    <!-- <div class="top-bar">
       <div class="status-info">
         <div class="status-dot" />
         <span>设备在线</span>
@@ -25,28 +25,42 @@
         <span>{{ currentTime }}</span>
       </div>
       <div>AR鹰眼监控</div>
+    </div> -->
+
+    <!-- 环境监测面板 -->
+    <div class="info-panel">
+      <div class="info-title">
+        <div class="status" />
+        <span>实时天气数据</span>
+      </div>
+      <div class="info-item">
+        <span>温度</span>
+        <span class="info-value">{{ temperature }}°C</span>
+      </div>
+      <div class="info-item">
+        <span>湿度</span>
+        <span class="info-value">{{ humidity }}%</span>
+      </div>
+      <div class="info-item">
+        <span>风速</span>
+        <span class="info-value">{{ windSpeed }}m/s</span>
+      </div>
     </div>
 
-    <!-- 右侧信息面板 -->
-    <div class="info-panel">
-      <div class="info-title">实时数据</div>
-      <div class="info-item">
-        <span>温度:</span>
-        <span>{{ temperature }}°C</span>
-      </div>
-      <div class="info-item">
-        <span>湿度:</span>
-        <span>{{ humidity }}%</span>
-      </div>
-      <div class="info-item">
-        <span>风速:</span>
-        <span>{{ windSpeed }}m/s</span>
-      </div>
-      <div class="info-item">
-        <span>人员:</span>
-        <span>{{ personCount }}人</span>
-      </div>
-    </div>
+    <!-- 项目信息面板 -->
+    <InfoCard
+      title="桐子坝13#域-高空监测"
+      :items="projectCardItems"
+      :top="150"
+      :left="400"
+    />
+
+    <InfoCard
+      title="桐子坝14#域-高空监测"
+      :items="projectCardItems"
+      :top="150"
+      :right="200"
+    />
 
     <!-- CallBridge数据展示面板 -->
     <div v-show="showCallBridgePanel" class="callbridge-panel">
@@ -93,21 +107,58 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
 import { ElMessage } from "element-plus";
 // import markerImage from "@/assets/h5/marker-1.png";
+import { getEnvironmentLatestData } from "@/api/h5";
+import InfoCard from "../components/InfoCard.vue";
 
 defineOptions({
   name: "H5Home"
 });
 
 // 响应式数据
-const currentTime = ref("--:--:--");
-const deviceSerial = ref("GC2247794");
-const temperature = ref("32.1");
-const humidity = ref("65");
-const windSpeed = ref("2.3");
-const personCount = ref("12");
+// const currentTime = ref("--:--:--");
+// const deviceSerial = ref("GC2247794");
+// 环境数据
+const temperature = ref("--");
+const humidity = ref("--");
+const windSpeed = ref("--");
+
+// 项目信息数据
+const totalPersons = ref("12");
+const avgSystolic = ref("105");
+const avgDiastolic = ref("85");
+const avgHeartRate = ref("114");
+
+// 计算属性 - 项目卡片数据
+const projectCardItems = computed(() => [
+  {
+    text: "作业票已审核",
+    textStyle: {
+      color: "#25E973"
+    }
+  },
+  {
+    label: "总人数",
+    value: `${totalPersons.value}人`
+  },
+  {
+    label: "平均收缩压",
+    value: `${avgSystolic.value}mmhg`,
+    trend: "up"
+  },
+  {
+    label: "平均舒张压",
+    value: `${avgDiastolic.value}mmhg`,
+    trend: "down"
+  },
+  {
+    label: "平均心率",
+    value: `${avgHeartRate.value}bpm`,
+    trend: "down"
+  }
+]);
 
 // 绘制相关状态
 const drawingCanvas = ref<SVGElement | null>(null);
@@ -147,18 +198,10 @@ const AREA_DATA = [
 ];
 
 // 时间更新
-const updateTime = () => {
-  const now = new Date();
-  currentTime.value = now.toLocaleTimeString("zh-CN", { hour12: false });
-};
-
-// 数据更新
-const updateData = () => {
-  temperature.value = (30 + Math.random() * 10).toFixed(1);
-  humidity.value = (60 + Math.random() * 20).toFixed(0);
-  windSpeed.value = (1 + Math.random() * 3).toFixed(1);
-  personCount.value = Math.floor(10 + Math.random() * 10).toString();
-};
+// const updateTime = () => {
+//   const now = new Date();
+//   currentTime.value = now.toLocaleTimeString("zh-CN", { hour12: false });
+// };
 
 // 绘制功能
 const onCanvasClick = (e: MouseEvent) => {
@@ -704,6 +747,22 @@ const resetView = () => {
   ElMessage.success("视图已重置");
 };
 
+// ----------------- 页面数据 ----------------
+// 获取环境数据
+const updateEnvironmentData = async () => {
+  try {
+    const result = await getEnvironmentLatestData();
+    if (result.success && result.data) {
+      temperature.value = result.data.temperature || "--";
+      humidity.value = result.data.humidity || "--";
+      windSpeed.value = result.data.windSpeed || "--";
+    }
+  } catch (error) {
+    console.error("获取环境数据失败:", error);
+    // 保持默认值 "--"
+  }
+};
+
 // CallBridge 相关功能
 const checkCallBridge = () => {
   const hasCallBridge = !!(window as any).CallBridge;
@@ -1004,14 +1063,13 @@ const initComponent = () => {
   }
 
   // 启动定时器
-  updateTime();
-  updateData();
-  timeTimer = setInterval(updateTime, 1000);
-  dataTimer = setInterval(updateData, 5000);
+  updateEnvironmentData();
+  dataTimer = setInterval(() => {
+    updateEnvironmentData();
+  }, 5000);
 
   // 初始化CallBridge监听
   // initCallBridge();
-
   // 定期监控CallBridge状态（每10秒检查一次）
   // callBridgeTimer = setInterval(monitorCallBridge, 10000);
 };
@@ -1021,14 +1079,13 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  if (timeTimer) clearInterval(timeTimer);
   if (dataTimer) clearInterval(dataTimer);
   if (callBridgeTimer) clearInterval(callBridgeTimer);
   clearAllLabels();
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 * {
   margin: 0;
   padding: 0;
@@ -1044,7 +1101,7 @@ onUnmounted(() => {
   overflow: hidden;
 }
 
-.top-bar {
+/* .top-bar {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -1085,63 +1142,51 @@ onUnmounted(() => {
   100% {
     opacity: 1;
   }
-}
-
-.bottom-controls {
-  position: absolute;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.8);
-  padding: 10px 20px;
-  border-radius: 25px;
-  display: flex;
-  gap: 15px;
-  backdrop-filter: blur(10px);
-  pointer-events: auto;
-}
-
-.control-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 11px;
-  transition: all 0.3s ease;
-}
-
-.control-btn:hover {
-  background: rgba(0, 123, 255, 0.7);
-  border-color: #007bff;
-  transform: translateY(-2px);
-}
+} */
 
 .info-panel {
   position: absolute;
+  bottom: 15px;
   right: 15px;
-  top: 60px;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 15px;
-  border-radius: 8px;
-  font-size: 11px;
-  min-width: 150px;
-  backdrop-filter: blur(10px);
+  background: rgba(9, 22, 69, 0.77);
+  color: #ffffff;
+  padding: 14px 12px;
+  border-radius: 2px;
+  font-size: 12px;
   pointer-events: auto;
-}
 
-.info-title {
-  font-weight: bold;
-  margin-bottom: 8px;
-  color: #00ff00;
-}
+  .info-title {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    .status {
+      width: 6px;
+      height: 6px;
+      background-color: #ffac26;
+      border: none;
+      margin-right: 4px;
+    }
+  }
 
-.info-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
+  .info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    align-items: center;
+  }
+
+  .info-item span:first-child {
+    color: #cbcbcb;
+    font-size: 12px;
+  }
+
+  .info-value {
+    font-weight: bold;
+    font-size: 12px;
+  }
 }
 
 .drawing-canvas {
@@ -1172,7 +1217,7 @@ onUnmounted(() => {
 .drawing-toolbar {
   position: absolute;
   bottom: 15px;
-  right: 15px;
+  left: 15px;
   background: rgba(0, 0, 0, 0.8);
   padding: 8px 15px;
   border-radius: 6px;
@@ -1184,28 +1229,28 @@ onUnmounted(() => {
   pointer-events: auto;
   min-width: 150px;
   z-index: 1000;
-}
 
-.tool-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 11px;
-  transition: all 0.3s ease;
-}
+  .tool-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 11px;
+    transition: all 0.3s ease;
+  }
 
-.tool-btn:hover {
-  background: rgba(0, 123, 255, 0.7);
-  border-color: #007bff;
-  transform: translateY(-2px);
-}
+  .tool-btn:hover {
+    background: rgba(0, 123, 255, 0.7);
+    border-color: #007bff;
+    transform: translateY(-2px);
+  }
 
-.area-count {
-  font-size: 12px;
-  color: white;
+  .area-count {
+    font-size: 12px;
+    color: white;
+  }
 }
 
 .callbridge-panel {
@@ -1224,57 +1269,57 @@ onUnmounted(() => {
   backdrop-filter: blur(10px);
   pointer-events: auto;
   border: 1px solid rgba(0, 255, 0, 0.3);
-}
 
-.callbridge-title {
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #00ff00;
-  border-bottom: 1px solid rgba(0, 255, 0, 0.3);
-  padding-bottom: 5px;
-}
+  .callbridge-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #00ff00;
+    border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+    padding-bottom: 5px;
+  }
 
-.callbridge-status {
-  margin-bottom: 10px;
-  padding: 5px 8px;
-  border-radius: 4px;
-  font-size: 10px;
-}
+  .callbridge-status {
+    margin-bottom: 10px;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+  }
 
-.callbridge-status.exists {
-  background: rgba(0, 255, 0, 0.2);
-  border: 1px solid #00ff00;
-}
+  .callbridge-status.exists {
+    background: rgba(0, 255, 0, 0.2);
+    border: 1px solid #00ff00;
+  }
 
-.callbridge-status.not-exists {
-  background: rgba(255, 0, 0, 0.2);
-  border: 1px solid #ff0000;
-}
+  .callbridge-status.not-exists {
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid #ff0000;
+  }
 
-.callbridge-data {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  padding: 8px;
-  margin-bottom: 8px;
-  font-family: "Courier New", monospace;
-  font-size: 10px;
-  word-break: break-all;
-}
+  .callbridge-data {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 8px;
+    font-family: "Courier New", monospace;
+    font-size: 10px;
+    word-break: break-all;
+  }
 
-.callbridge-timestamp {
-  color: #888;
-  font-size: 9px;
-  margin-bottom: 3px;
-}
+  .callbridge-timestamp {
+    color: #888;
+    font-size: 9px;
+    margin-bottom: 3px;
+  }
 
-.callbridge-raw {
-  color: #ffff00;
-  margin-bottom: 5px;
-}
+  .callbridge-raw {
+    color: #ffff00;
+    margin-bottom: 5px;
+  }
 
-.callbridge-parsed {
-  color: #00ffff;
+  .callbridge-parsed {
+    color: #00ffff;
+  }
 }
 
 .fence-polygon {
