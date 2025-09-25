@@ -29,7 +29,7 @@ export default [
     meta: {
       title: "人员打卡",
       showLink: false,
-      rank: 201 
+      rank: 201
     }
   },
   {
@@ -38,6 +38,16 @@ export default [
     component: () => import("@/views/h5/health/index.vue"),
     meta: {
       title: "人员健康监测",
+      showLink: false,
+      rank: 201
+    }
+  },
+  {
+    path: "/h5/box",
+    name: "H5Box",
+    component: () => import("@/views/h5/box/index.vue"),
+    meta: {
+      title: "一号配电箱",
       showLink: false,
       rank: 201
     }

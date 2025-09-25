@@ -122,6 +122,41 @@ export interface HealthDataResult {
   };
 }
 
+// 用电监测记录
+export interface PowerDeviceRecord {
+  id: string;
+  deviceSn: string; // 设备序列号
+  alarmStatus: number; // 报警状态
+  voltageA: string; // A相电压
+  currentA: string; // A相电流
+  frequencyA: string; // A相频率
+  temperatureA: string; // A相温度
+  voltageB: string; // B相电压
+  currentB: string; // B相电流
+  frequencyB: string; // B相频率
+  temperatureB: string; // B相温度
+  voltageC: string; // C相电压
+  currentC: string; // C相电流
+  frequencyC: string; // C相频率
+  temperatureC: string; // C相温度
+  temperature: string; // 总温度
+  totalActivePower: string; // 总有功功率
+  monitorDateTime: number; // 监测时间
+}
+
+// 用电监测API响应
+export interface PowerDeviceResult {
+  success: boolean;
+  code: number;
+  data: {
+    records: PowerDeviceRecord[];
+    total: number;
+    pages: number;
+    pageSize: number;
+    pageNum: number;
+  };
+}
+
 /**
  * 格式化数字，去掉末尾的0，最多保留2位小数
  * @param value 数字字符串
@@ -272,7 +307,31 @@ export const getHealthMonitorData = (data: {
 }) => {
   return http.request<HealthDataResult>(
     "post",
-    "/api/base/data/data-select/search-collect-page?code=smartBandLogGroup",
+    "/anon/base/data/data-select/search-collect-page?code=smartBandLogGroup",
+    { data },
+    {
+      disableProgress: true
+    }
+  );
+};
+
+/**
+ * 获取用电监测设备数据
+ * @param data 请求体
+ */
+export const getPowerDeviceData = (data: {
+  deviceSn?: string;
+  alarmStatus?: string;
+  currentLeakMin?: number | null;
+  currentLeakMax?: number | null;
+  temperatureMin?: number | null;
+  temperatureMax?: number | null;
+  pageSize?: number;
+  current?: number;
+}) => {
+  return http.request<PowerDeviceResult>(
+    "post",
+    "/anon/kjxa/action/power-device/search-page",
     { data },
     {
       disableProgress: true
