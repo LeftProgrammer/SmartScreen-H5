@@ -187,13 +187,16 @@ defineExpose({
 .controls-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  height: calc(100% - 30px);
+  gap: 12px 8px;
 }
 
 .control-item {
   height: 36px;
-  background: linear-gradient(90deg, #35c179 0%, #0e6e3d 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(53, 193, 121, 0.5) 0%,
+    rgba(14, 110, 61, 0.5) 100%
+  );
   border: 1px solid rgba(0, 255, 136, 0.3);
   border-radius: 2px;
   padding: 0 6px;
@@ -204,7 +207,7 @@ defineExpose({
   border-image: linear-gradient(
       180deg,
       rgba(182, 255, 168, 0.14),
-      rgba(236, 255, 242, 1)
+      rgba(236, 255, 242, 0.35)
     )
     1 1;
   color: #ffffff;
@@ -213,7 +216,7 @@ defineExpose({
 }
 
 .control-label {
-  margin-right: 2px;
+  margin-right: 3px;
 }
 
 .control-value {
