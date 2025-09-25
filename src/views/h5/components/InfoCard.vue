@@ -134,24 +134,25 @@ const cardStyle = computed(() => {
   position: absolute;
   background: rgba(5, 63, 27, 0.65);
   color: #ffffff;
-  padding: 12px;
-  border-radius: 2px;
-  font-size: 12px;
+  padding: 0.6vw; /* 调小 */
+  border-radius: 0.15vw; /* 调小 */
+  font-size: 0.9vw; /* 调小 */
   pointer-events: auto;
-  min-width: 200px;
+  min-width: 12vw; /* 调小 */
 
   .card-title {
-    font-size: 14px;
+    font-size: 1.1vw; /* 调小 */
     font-weight: bold;
-    margin-bottom: 8px;
+    margin-bottom: 0.4vw; /* 调小 */
     color: #ffffff;
     display: flex;
     align-items: center;
 
     .title-icon {
-      width: 6px;
-      height: 6px;
-      margin-right: 4px;
+      width: 0.6vw; /* 调小 */
+      height: 0.6vw; /* 调小 */
+      margin-right: 0.6vw; /* 调小 */
+      border-radius: 0.15vw; /* 调小 */
     }
   }
 
@@ -160,18 +161,18 @@ const cardStyle = computed(() => {
     align-items: center;
     justify-content: space-between;
     background: rgba(25, 126, 74, 0.74);
-    padding: 4px 8px;
-    border-radius: 1px;
-    margin-bottom: 4px;
+    padding: 0.3vw; /* 调小 */
+    border-radius: 0.1vw;
+    margin-bottom: 0.3vw; /* 调小 */
 
     &:last-child {
-      margin-bottom: 0px;
+      margin-bottom: 0;
     }
 
     .item-icon {
-      margin-right: 4px;
-      width: 16px;
-      height: 16px;
+      margin-right: 0.2vw;
+      width: 1.2vw; /* 调小 */
+      height: 1.2vw; /* 调小 */
     }
 
     .item-text {
@@ -180,7 +181,7 @@ const cardStyle = computed(() => {
 
     .trend {
       font-weight: bold;
-      margin-left: 8px;
+      margin-left: 0.3vw; /* 调小 */
 
       &.up {
         color: #ff4444;
